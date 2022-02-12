@@ -56,6 +56,11 @@ class ProductFragment: BaseFragment() {
         viewModel.getProducts()
     }
 
+    private fun deleteProduct(sku: String) {
+        showLoading()
+        viewModel.removeProduct(sku = sku)
+    }
+
     private fun observerViewModel() {
         viewModel.getProductsFormResult.observe(viewLifecycleOwner, Observer {
             val result = it ?: return@Observer
@@ -70,7 +75,7 @@ class ProductFragment: BaseFragment() {
                         }
 
                         override fun onDeleteClicked(sku: String) {
-
+                            deleteProduct(sku)
                         }
 
                     })
@@ -83,5 +88,21 @@ class ProductFragment: BaseFragment() {
                 }
             }
         })
+
+        viewModel.removeFormResult.observe(viewLifecycleOwner, Observer {
+            val result = it ?: return@Observer
+            hideLoading()
+
+            when (result) {
+                is Result.Success -> {
+                    getProducts()
+                }
+
+                is Result.Failure -> {
+                    showSnackbar(result.message)
+                }
+            }
+        })
     }
+
 }
