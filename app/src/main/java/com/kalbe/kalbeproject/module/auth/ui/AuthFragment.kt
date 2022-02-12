@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.kalbe.core.ui.BaseFragment
 import com.kalbe.datasource.model.Result
 import com.kalbe.kalbeproject.R
@@ -92,6 +93,8 @@ class AuthFragment: BaseFragment() {
     }
 
     private fun requestAuthToServer() {
+        showLoading()
+
         when (authType) {
             Authtype.LOGIN -> {
                 viewModel.login(email = email, password = password)
@@ -118,6 +121,7 @@ class AuthFragment: BaseFragment() {
                 is Result.Success -> {
                     resetField()
                     showSnackbar("Success Register, please login")
+                    authType = Authtype.LOGIN
                     switchAuthType()
                 }
 
@@ -129,9 +133,12 @@ class AuthFragment: BaseFragment() {
 
         viewModel.loginFormResult.observe(viewLifecycleOwner, Observer {
             val result = it ?: return@Observer
+            hideLoading()
 
             when (result) {
                 is Result.Success -> {
+                    val action = AuthFragmentDirections.actionAuthFragmentToProductFragment()
+                    findNavController().navigate(action)
                     showSnackbar("Login Success")
                 }
 

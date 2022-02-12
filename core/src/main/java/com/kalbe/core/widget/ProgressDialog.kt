@@ -36,7 +36,7 @@ class ProgressDialog: DialogFragment() {
     private fun setupDialog() {
         isCancelable = false
 
-        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 
