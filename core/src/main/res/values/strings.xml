@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cek_koneksi_internet">Cek koneksi internet kamu ya!</string>
+    <string name="koneksi_kamu_lambat">Koneksi internet kamu lambat</string>
+    <string name="image_empty_list">Image empty list</string>
+    <string name="image_popup_alert">Image pop up alert</string>
+    <string name="oops">oops..</string>
+    <string name="ok">Ok</string>
+</resources>
