@@ -40,6 +40,24 @@ class ProductViewModel(private val apiRepository: ApiRepository): ViewModel() {
 
     }
 
+    private var _getProductsFormResult = MutableLiveData<Result<List<Product>>>()
+    val getProductsFormResult: LiveData<Result<List<Product>>> get() = _getProductsFormResult
+
+    fun getProducts() = viewModelScope.launch {
+        val response = apiRepository.getProducts()
+
+        when (response) {
+            is Resource.Success -> {
+                val products = response.value
+                _getProductsFormResult.value = Result.Success(value = products)
+            }
+
+            is Resource.Failure -> {
+                _getProductsFormResult.value = Result.Failure(message = response.errorMessage)
+            }
+        }
+    }
+
     private var _isEnableButton = MutableLiveData<Boolean>()
     val isEnableButton: LiveData<Boolean> get() = _isEnableButton
 
