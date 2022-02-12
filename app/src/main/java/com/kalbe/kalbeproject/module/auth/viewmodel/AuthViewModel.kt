@@ -23,9 +23,7 @@ class AuthViewModel(private val apiRepository: ApiRepository, private val authMa
         body.addProperty("email", email)
         body.addProperty("password", password)
 
-        val response = apiRepository.register(body = body)
-
-        when (response) {
+        when (val response = apiRepository.register(body = body)) {
             is Resource.Success -> {
                 val auth = response.value.data
                 _registerFormResult.value = Result.Success(value = auth)
@@ -45,9 +43,7 @@ class AuthViewModel(private val apiRepository: ApiRepository, private val authMa
         body.addProperty("email", email)
         body.addProperty("password", password)
 
-        val response = apiRepository.login(body = body)
-
-        when (response) {
+        when (val response = apiRepository.login(body = body)) {
             is Resource.Success -> {
                 val user = response.value
                 authManager.saveToken(token = user.token)
