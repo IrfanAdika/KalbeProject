@@ -32,7 +32,30 @@ class AuthViewModel(private val apiRepository: ApiRepository, private val authMa
             }
 
             is Resource.Failure -> {
-                _registerFormResult.value = Result.Failure()
+                _registerFormResult.value = Result.Failure(message = response.errorMessage)
+            }
+        }
+    }
+
+    private var _loginFormResult = MutableLiveData<Result<Auth>>()
+    val loginFormResult: LiveData<Result<Auth>> get() = _loginFormResult
+
+    fun login(email: String, password: String) = viewModelScope.launch {
+        val body = JsonObject()
+        body.addProperty("email", email)
+        body.addProperty("password", password)
+
+        val response = apiRepository.login(body = body)
+
+        when (response) {
+            is Resource.Success -> {
+                val user = response.value
+                authManager.saveToken(token = user.token)
+                _loginFormResult.value = Result.Success(value = user)
+            }
+
+            is Resource.Failure -> {
+                _loginFormResult.value = Result.Failure(message = response.errorMessage)
             }
         }
     }

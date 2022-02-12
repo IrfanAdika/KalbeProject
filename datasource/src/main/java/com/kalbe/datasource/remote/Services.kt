@@ -10,4 +10,7 @@ interface Services {
 
     @POST("register")
     suspend fun postRegister(@Body body: JsonObject): Response<User>
+
+    @POST("auth/login")
+    suspend fun postLogin(@Body body: JsonObject): Auth
 }

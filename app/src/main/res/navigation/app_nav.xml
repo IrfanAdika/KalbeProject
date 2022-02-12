@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.kalbe.kalbeproject.module.auth.ui.RegisterFragment"
+        android:name="com.kalbe.kalbeproject.module.auth.ui.AuthFragment"
         android:label="RegisterFragment">
 
         <action

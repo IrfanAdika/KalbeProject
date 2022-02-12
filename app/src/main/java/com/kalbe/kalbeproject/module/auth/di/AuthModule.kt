@@ -5,7 +5,7 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
-object RegisterModule {
+object AuthModule {
 
     fun load() {
         loadKoinModules(authModule)

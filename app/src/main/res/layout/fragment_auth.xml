@@ -14,6 +14,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/px_dp_50"
+            android:textStyle="bold"
+            android:textSize="@dimen/px_sp_60"
+            app:layout_constraintBottom_toTopOf="@id/view_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/view_container"
             android:layout_width="match_parent"
@@ -78,13 +89,22 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_switch_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/px_dp_50"
+            android:textColor="@color/colorBlue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/button_register"
+            app:layout_constraintBottom_toBottomOf="@id/button_register"/>
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_register"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/px_dp_80"
             android:layout_marginTop="@dimen/px_dp_50"
             android:layout_marginEnd="@dimen/px_dp_50"
-            android:text="@string/register"
             android:textColor="@color/colorWhite"
             android:background="@drawable/bg_round_r8_primary_dark"
             android:textAllCaps="false"
