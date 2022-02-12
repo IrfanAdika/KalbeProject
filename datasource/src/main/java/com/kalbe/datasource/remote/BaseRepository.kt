@@ -43,7 +43,7 @@ abstract class BaseRepository: KoinComponent {
                             }
 
                             else -> {
-                                Resource.Failure(response.message)
+                                Resource.Failure("Failed process data")
                             }
                         }
                     }
