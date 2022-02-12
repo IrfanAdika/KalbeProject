@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.kalbe.core.ui.BaseFragment
 import com.kalbe.datasource.model.Product
 import com.kalbe.datasource.model.Result
@@ -71,7 +72,8 @@ class ProductFragment: BaseFragment() {
                     val products = result.value as ArrayList<Product>
                     val adapter = ProductAdapter(products = products, callback = object : ProductAdapter.ProductItemCallback {
                         override fun onEditClicked(sku: String) {
-
+                            val action = ProductFragmentDirections.actionProductFragmentToAddProductFragment(sku)
+                            findNavController().navigate(action)
                         }
 
                         override fun onDeleteClicked(sku: String) {

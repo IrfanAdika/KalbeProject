@@ -73,6 +73,24 @@ class ProductViewModel(private val apiRepository: ApiRepository): ViewModel() {
         }
     }
 
+    private var _getProductBySkuFormResult = MutableLiveData<Result<Product>>()
+    val getProductBySkuFormResult: LiveData<Result<Product>> get() = _getProductBySkuFormResult
+
+    fun getProductBySku(sku: String) = viewModelScope.launch {
+        val body = JsonObject()
+        body.addProperty("sku", sku)
+
+        when (val response = apiRepository.getProductBySku(body = body)) {
+            is Resource.Success -> {
+                _getProductBySkuFormResult.value = Result.Success(value = response.value)
+            }
+
+            is Resource.Failure -> {
+                _getProductBySkuFormResult.value = Result.Failure(response.errorMessage)
+            }
+        }
+    }
+
     private var _isEnableButton = MutableLiveData<Boolean>()
     val isEnableButton: LiveData<Boolean> get() = _isEnableButton
 
