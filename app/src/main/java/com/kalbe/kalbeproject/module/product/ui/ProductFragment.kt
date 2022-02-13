@@ -52,14 +52,19 @@ class ProductFragment: BaseFragment() {
         }
 
         viewBinding?.buttonSearch?.setOnClickListener {
-            getProductBySku()
+            val textSearch = viewBinding?.edittextSearchSku?.text.toString()
+            if (textSearch.isEmpty()) {
+                getProducts()
+            } else {
+                getProductBySku(sku = textSearch)
+            }
+
         }
     }
 
-    private fun getProductBySku() {
+    private fun getProductBySku(sku: String) {
         showLoading()
-        val textSearch = viewBinding?.edittextSearchSku?.text.toString()
-        viewModel.getProductBySku(sku = textSearch)
+        viewModel.getProductBySku(sku = sku)
     }
 
     private fun getProducts() {
@@ -128,7 +133,9 @@ class ProductFragment: BaseFragment() {
                 is Result.Success -> {
                     val product = result.value
                     val productList = ArrayList<Product>()
-                    productList.add(product)
+                    if (product.sku.isNotEmpty()) {
+                        productList.add(product)
+                    }
 
                     setupListProduct(productList)
                 }

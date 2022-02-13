@@ -94,12 +94,12 @@ class AddProductFragment: BaseFragment() {
         }
 
         viewBinding?.edittextQty?.doAfterTextChanged {
-            qty = it.toString().toInt()
+            qty = if (it.toString().isEmpty()) 0 else it.toString().toInt()
             checkField()
         }
 
         viewBinding?.edittextPrice?.doAfterTextChanged {
-            price = it.toString().toInt()
+            price = if (it.toString().isEmpty()) 0 else it.toString().toInt()
             checkField()
         }
 
