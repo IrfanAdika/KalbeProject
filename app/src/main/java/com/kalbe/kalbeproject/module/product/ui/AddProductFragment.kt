@@ -10,19 +10,20 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.kalbe.core.ui.BaseFragment
 import com.kalbe.datasource.model.Product
 import com.kalbe.datasource.model.Result
 import com.kalbe.kalbeproject.R
 import com.kalbe.kalbeproject.databinding.FragmentAddProductBinding
 import com.kalbe.kalbeproject.module.product.viewmodel.ProductViewModel
-import org.jetbrains.anko.sdk27.coroutines.onItemSelectedListener
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class AddProductFragment: BaseFragment() {
 
     private var viewBinding: FragmentAddProductBinding? = null
     private val viewModel: ProductViewModel by viewModel()
+    val args : AddProductFragmentArgs by navArgs()
 
     private var sku = ""
     private var productName = ""
@@ -30,6 +31,8 @@ class AddProductFragment: BaseFragment() {
     private var price = 0
     private var unit = ""
     private var status = 0
+    val statusList = arrayListOf(0, 1)
+    private lateinit var submitType: SubmitType
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +43,7 @@ class AddProductFragment: BaseFragment() {
         viewBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_product, container, false)
         viewBinding?.viewModel = viewModel
         viewBinding?.lifecycleOwner = this
+
         return viewBinding?.root
     }
 
@@ -49,11 +53,32 @@ class AddProductFragment: BaseFragment() {
         observerViewModel()
         listenerEditTextFilled()
         buttonClicked()
+
+        sku = args.sku
+        setupLayout()
+    }
+
+    private fun setupLayout() {
+        val isEdit = sku.isEmpty().not()
+        if (isEdit) {
+            viewBinding?.textviewTitle?.text = getString(R.string.edit_product)
+            viewBinding?.buttonSubmitProduct?.text = getString(R.string.edit)
+            submitType = SubmitType.EDIT
+            getProductBySku()
+        } else {
+            viewBinding?.textviewTitle?.text = getString(R.string.add_product)
+            viewBinding?.buttonSubmitProduct?.text = getString(R.string.add)
+            submitType = SubmitType.ADD
+        }
     }
 
     private fun buttonClicked() {
-        viewBinding?.buttonAddProduct?.setOnClickListener {
-            addProduct()
+        viewBinding?.buttonSubmitProduct?.setOnClickListener {
+            submitProduct()
+        }
+
+        viewBinding?.buttonCancel?.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
@@ -69,12 +94,12 @@ class AddProductFragment: BaseFragment() {
         }
 
         viewBinding?.edittextQty?.doAfterTextChanged {
-            qty = it.toString().toInt()
+            qty = if (it.toString().isEmpty()) 0 else it.toString().toInt()
             checkField()
         }
 
         viewBinding?.edittextPrice?.doAfterTextChanged {
-            price = it.toString().toInt()
+            price = if (it.toString().isEmpty()) 0 else it.toString().toInt()
             checkField()
         }
 
@@ -83,9 +108,8 @@ class AddProductFragment: BaseFragment() {
             checkField()
         }
 
-        val statusList = arrayListOf(0, 1)
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, statusList)
-        viewBinding?.spinnerStatus?.adapter = adapter
+        val adapterStatus = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, statusList)
+        viewBinding?.spinnerStatus?.adapter = adapterStatus
 
         viewBinding?.spinnerStatus?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -97,9 +121,7 @@ class AddProductFragment: BaseFragment() {
                 status = parent?.getItemAtPosition(position).toString().toInt()
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
 
         }
 
@@ -121,9 +143,23 @@ class AddProductFragment: BaseFragment() {
         return product
     }
 
-    private fun addProduct() {
+    private fun submitProduct() {
         showLoading()
-        viewModel.addProduct(product = setProduct())
+        viewModel.addProduct(product = setProduct(), submitType = submitType)
+    }
+
+    private fun getProductBySku() {
+        showLoading()
+        viewModel.getProductBySku(sku = sku)
+    }
+
+    private fun setDataBySku(product: Product) {
+        viewBinding?.edittextSku?.setText(product.sku)
+        viewBinding?.edittextProductName?.setText(product.productName)
+        viewBinding?.edittextQty?.setText(product.qty.toString())
+        viewBinding?.edittextPrice?.setText(product.price.toString())
+        viewBinding?.edittextUnit?.setText(product.unit)
+        viewBinding?.spinnerStatus?.setSelection(statusList.indexOf(product.status))
     }
 
     private fun observerViewModel() {
@@ -134,6 +170,21 @@ class AddProductFragment: BaseFragment() {
             when (result) {
                 is Result.Success -> {
                     findNavController().popBackStack()
+                }
+
+                is Result.Failure -> {
+                    showSnackbar(result.message)
+                }
+            }
+        })
+
+        viewModel.getProductBySkuFormResult.observe(viewLifecycleOwner, Observer {
+            val result = it ?: return@Observer
+            hideLoading()
+
+            when (result) {
+                is Result.Success -> {
+                    setDataBySku(product = result.value)
                 }
 
                 is Result.Failure -> {
