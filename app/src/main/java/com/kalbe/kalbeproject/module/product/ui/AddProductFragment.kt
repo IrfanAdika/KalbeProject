@@ -17,7 +17,6 @@ import com.kalbe.datasource.model.Result
 import com.kalbe.kalbeproject.R
 import com.kalbe.kalbeproject.databinding.FragmentAddProductBinding
 import com.kalbe.kalbeproject.module.product.viewmodel.ProductViewModel
-import org.jetbrains.anko.sdk27.coroutines.onItemSelectedListener
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class AddProductFragment: BaseFragment() {
@@ -33,6 +32,7 @@ class AddProductFragment: BaseFragment() {
     private var unit = ""
     private var status = 0
     val statusList = arrayListOf(0, 1)
+    private lateinit var submitType: SubmitType
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,16 +63,18 @@ class AddProductFragment: BaseFragment() {
         if (isEdit) {
             viewBinding?.textviewTitle?.text = getString(R.string.edit_product)
             viewBinding?.buttonSubmitProduct?.text = getString(R.string.edit)
+            submitType = SubmitType.EDIT
             getProductBySku()
         } else {
             viewBinding?.textviewTitle?.text = getString(R.string.add_product)
             viewBinding?.buttonSubmitProduct?.text = getString(R.string.add)
+            submitType = SubmitType.ADD
         }
     }
 
     private fun buttonClicked() {
         viewBinding?.buttonSubmitProduct?.setOnClickListener {
-            addProduct()
+            submitProduct()
         }
 
         viewBinding?.buttonCancel?.setOnClickListener {
@@ -119,9 +121,7 @@ class AddProductFragment: BaseFragment() {
                 status = parent?.getItemAtPosition(position).toString().toInt()
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
 
         }
 
@@ -143,9 +143,9 @@ class AddProductFragment: BaseFragment() {
         return product
     }
 
-    private fun addProduct() {
+    private fun submitProduct() {
         showLoading()
-        viewModel.addProduct(product = setProduct())
+        viewModel.addProduct(product = setProduct(), submitType = submitType)
     }
 
     private fun getProductBySku() {

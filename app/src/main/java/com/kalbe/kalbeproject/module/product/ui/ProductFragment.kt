@@ -50,6 +50,16 @@ class ProductFragment: BaseFragment() {
             val action = ProductFragmentDirections.actionProductFragmentToAddProductFragment()
             it.findNavController().navigate(action)
         }
+
+        viewBinding?.buttonSearch?.setOnClickListener {
+            getProductBySku()
+        }
+    }
+
+    private fun getProductBySku() {
+        showLoading()
+        val textSearch = viewBinding?.edittextSearchSku?.text.toString()
+        viewModel.getProductBySku(sku = textSearch)
     }
 
     private fun getProducts() {
@@ -62,6 +72,22 @@ class ProductFragment: BaseFragment() {
         viewModel.removeProduct(sku = sku)
     }
 
+    private fun setupListProduct(products: ArrayList<Product>) {
+        val adapter = ProductAdapter(products = products, callback = object : ProductAdapter.ProductItemCallback {
+            override fun onEditClicked(sku: String) {
+                val action = ProductFragmentDirections.actionProductFragmentToAddProductFragment(sku)
+                findNavController().navigate(action)
+            }
+
+            override fun onDeleteClicked(sku: String) {
+                deleteProduct(sku)
+            }
+
+        })
+
+        viewBinding?.recyclerviewProduct?.adapter = adapter
+    }
+
     private fun observerViewModel() {
         viewModel.getProductsFormResult.observe(viewLifecycleOwner, Observer {
             val result = it ?: return@Observer
@@ -70,19 +96,7 @@ class ProductFragment: BaseFragment() {
             when (result) {
                 is Result.Success -> {
                     val products = result.value as ArrayList<Product>
-                    val adapter = ProductAdapter(products = products, callback = object : ProductAdapter.ProductItemCallback {
-                        override fun onEditClicked(sku: String) {
-                            val action = ProductFragmentDirections.actionProductFragmentToAddProductFragment(sku)
-                            findNavController().navigate(action)
-                        }
-
-                        override fun onDeleteClicked(sku: String) {
-                            deleteProduct(sku)
-                        }
-
-                    })
-
-                    viewBinding?.recyclerviewProduct?.adapter = adapter
+                    setupListProduct(products)
                 }
 
                 is Result.Failure -> {
@@ -98,6 +112,25 @@ class ProductFragment: BaseFragment() {
             when (result) {
                 is Result.Success -> {
                     getProducts()
+                }
+
+                is Result.Failure -> {
+                    showSnackbar(result.message)
+                }
+            }
+        })
+
+        viewModel.getProductBySkuFormResult.observe(viewLifecycleOwner, Observer {
+            val result = it ?: return@Observer
+            hideLoading()
+
+            when (result) {
+                is Result.Success -> {
+                    val product = result.value
+                    val productList = ArrayList<Product>()
+                    productList.add(product)
+
+                    setupListProduct(productList)
                 }
 
                 is Result.Failure -> {

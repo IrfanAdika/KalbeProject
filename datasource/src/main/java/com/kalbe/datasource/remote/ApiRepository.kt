@@ -16,6 +16,10 @@ class ApiRepository(private val services: Services): BaseRepository() {
         services.postProduct(body = body)
     }
 
+    suspend fun editProduct(body: JsonObject) = safeApiCall {
+        services.postEdit(body = body)
+    }
+
     suspend fun getProducts() = safeApiCall {
         services.getProducts()
     }

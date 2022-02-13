@@ -11,11 +11,11 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/px_dp_80"
             android:layout_marginStart="@dimen/px_dp_60"
-            android:layout_marginEnd="@dimen/px_dp_50"
+            android:layout_marginEnd="@dimen/px_dp_15"
             android:background="@drawable/bg_round_r8_primary_dark"
             android:backgroundTint="@color/colorLightGray"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/button_add_product"
+            app:layout_constraintEnd_toStartOf="@id/button_search"
             app:layout_constraintTop_toTopOf="@id/button_add_product"
             app:layout_constraintBottom_toBottomOf="@id/button_add_product">
 
@@ -26,10 +26,22 @@
                 android:background="@null"
                 android:hint="@string/search_sku"
                 android:textSize="@dimen/px_sp_25"
+                android:inputType="text"
                 android:layout_marginStart="@dimen/px_dp_15"
                 android:layout_marginEnd="@dimen/px_dp_15"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/button_search"
+            android:layout_width="@dimen/px_dp_70"
+            android:layout_height="@dimen/px_dp_70"
+            android:layout_marginEnd="@dimen/px_dp_50"
+            android:src="@android:drawable/ic_menu_search"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toStartOf="@id/button_add_product"
+            app:layout_constraintTop_toTopOf="@id/button_add_product"
+            app:layout_constraintBottom_toBottomOf="@id/button_add_product"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_add_product"
