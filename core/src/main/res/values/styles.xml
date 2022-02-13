@@ -5,6 +5,18 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <style name="TextColorStandard">
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+    <style name="BoldFont" parent="TextColorStandard">
+        <item name="fontFamily">@font/inter_bold</item>
+    </style>
+
+    <style name="MediumFont" parent="TextColorStandard">
+        <item name="fontFamily">@font/inter_medium</item>
+    </style>
+
     <!--Background round BottomSheet-->
     <style name="DialogRoundTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModalStyle</item>

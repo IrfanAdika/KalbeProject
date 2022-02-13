@@ -1,9 +1,9 @@
 object Environments {
 
     // SERVER SERVICE
-    const val URL_SIT = "\"http://demo8122690.mockable.io/\""
-    const val URL_STAGING = "\"http://demo8122690.mockable.io/\""
-    const val URL_PROD = "\"http://demo8122690.mockable.io/\""
+    const val URL_SIT = "\"https://hoodwink.medkomtek.net/api/\""
+    const val URL_STAGING = "\"https://hoodwink.medkomtek.net/api/\""
+    const val URL_PROD = "\"https://hoodwink.medkomtek.net/api/\""
 }
 
 object Flavors {
