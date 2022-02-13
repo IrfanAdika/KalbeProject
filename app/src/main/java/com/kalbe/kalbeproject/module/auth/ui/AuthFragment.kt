@@ -116,6 +116,7 @@ class AuthFragment: BaseFragment() {
     private fun observerViewModel() {
         viewModel.registerFormResult.observe(viewLifecycleOwner, Observer {
             val result = it ?: return@Observer
+            hideLoading()
 
             when (result) {
                 is Result.Success -> {

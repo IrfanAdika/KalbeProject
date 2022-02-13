@@ -9,6 +9,7 @@ import com.kalbe.datasource.model.Product
 import com.kalbe.datasource.model.Result
 import com.kalbe.datasource.remote.ApiRepository
 import com.kalbe.datasource.remote.Resource
+import com.kalbe.kalbeproject.module.product.ui.SubmitType
 import kotlinx.coroutines.launch
 
 class ProductViewModel(private val apiRepository: ApiRepository): ViewModel() {
@@ -16,7 +17,7 @@ class ProductViewModel(private val apiRepository: ApiRepository): ViewModel() {
     private var _addProductFormResult = MutableLiveData<Result<Product>>()
     val addProductFormResult: LiveData<Result<Product>> get() = _addProductFormResult
 
-    fun addProduct(product: Product) = viewModelScope.launch {
+    fun addProduct(product: Product, submitType: SubmitType) = viewModelScope.launch {
 
         val body = JsonObject()
         body.addProperty("sku", product.sku)
@@ -26,7 +27,13 @@ class ProductViewModel(private val apiRepository: ApiRepository): ViewModel() {
         body.addProperty("unit", product.unit)
         body.addProperty("status", product.status)
 
-        when (val response = apiRepository.addProduct(body = body)) {
+        val response = if (submitType == SubmitType.ADD) {
+            apiRepository.addProduct(body = body)
+        } else {
+            apiRepository.editProduct(body = body)
+        }
+
+        when (response) {
             is Resource.Success -> {
                 _addProductFormResult.value = Result.Success(value = response.value)
             }
@@ -69,6 +76,24 @@ class ProductViewModel(private val apiRepository: ApiRepository): ViewModel() {
 
             is Resource.Failure -> {
                 _removeProductFormResult.value = Result.Failure(response.errorMessage)
+            }
+        }
+    }
+
+    private var _getProductBySkuFormResult = MutableLiveData<Result<Product>>()
+    val getProductBySkuFormResult: LiveData<Result<Product>> get() = _getProductBySkuFormResult
+
+    fun getProductBySku(sku: String) = viewModelScope.launch {
+        val body = JsonObject()
+        body.addProperty("sku", sku)
+
+        when (val response = apiRepository.getProductBySku(body = body)) {
+            is Resource.Success -> {
+                _getProductBySkuFormResult.value = Result.Success(value = response.value)
+            }
+
+            is Resource.Failure -> {
+                _getProductBySkuFormResult.value = Result.Failure(response.errorMessage)
             }
         }
     }

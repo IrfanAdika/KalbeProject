@@ -19,9 +19,15 @@ interface Services {
     @POST("item/add")
     suspend fun postProduct(@Body body: JsonObject): Product
 
+    @POST("item/update")
+    suspend fun postEdit(@Body body: JsonObject): Product
+
     @GET("items")
     suspend fun getProducts(): List<Product>
 
     @POST("item/delete")
     suspend fun deleteProduct(@Body body: JsonObject): Product
+
+    @POST("item/search")
+    suspend fun getProductBySku(@Body body: JsonObject): Product
 }
