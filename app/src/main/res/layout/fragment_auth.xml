@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.kalbe.kalbeproject.module.auth.viewmodel.AuthViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/px_dp_50"
+            android:textStyle="bold"
+            android:textSize="@dimen/px_sp_60"
+            app:layout_constraintBottom_toTopOf="@id/view_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/view_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/view_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/px_dp_50"
+                android:layout_marginEnd="@dimen/px_dp_50"
+                android:background="@drawable/bg_round_r8_primary_dark"
+                android:backgroundTint="@color/colorLightGray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edittext_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_dp_60"
+                    android:layout_margin="@dimen/px_dp_10"
+                    android:background="@null"
+                    android:hint="@string/email"
+                    android:textSize="@dimen/px_sp_25"
+                    android:inputType="textEmailAddress"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/view_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/px_dp_50"
+                android:layout_marginTop="@dimen/px_dp_20"
+                android:layout_marginEnd="@dimen/px_dp_50"
+                android:background="@drawable/bg_round_r8_primary_dark"
+                android:backgroundTint="@color/colorLightGray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_email">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edittext_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_dp_60"
+                    android:layout_margin="@dimen/px_dp_10"
+                    android:background="@null"
+                    android:hint="@string/password"
+                    android:textSize="@dimen/px_sp_25"
+                    android:inputType="textPassword"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_switch_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/px_dp_50"
+            android:textColor="@color/colorBlue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/button_register"
+            app:layout_constraintBottom_toBottomOf="@id/button_register"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_register"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/px_dp_80"
+            android:layout_marginTop="@dimen/px_dp_50"
+            android:layout_marginEnd="@dimen/px_dp_50"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/bg_round_r8_primary_dark"
+            android:textAllCaps="false"
+            android:enabled="@{viewModel.isEnableButton}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_container"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

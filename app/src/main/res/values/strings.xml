@@ -1,3 +1,22 @@
 <resources>
-    <string name="app_name">KalbeProject</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="already_account">Already account? Login</string>
+    <string name="dont_have_account">Don\'t have account? please Register</string>
+    <string name="add_product">Add Product</string>
+    <string name="edit_product">Edit Product</string>
+    <string name="search_sku">Search By SKU</string>
+    <string name="sku">sku</string>
+    <string name="product_name">product name</string>
+    <string name="qty">qty</string>
+    <string name="price">price</string>
+    <string name="unit">unit</string>
+    <string name="status">status</string>
+    <string name="action">Action</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
 </resources>
