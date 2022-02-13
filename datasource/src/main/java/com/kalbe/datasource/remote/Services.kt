@@ -21,4 +21,7 @@ interface Services {
 
     @GET("items")
     suspend fun getProducts(): List<Product>
+
+    @POST("item/delete")
+    suspend fun deleteProduct(@Body body: JsonObject): Product
 }

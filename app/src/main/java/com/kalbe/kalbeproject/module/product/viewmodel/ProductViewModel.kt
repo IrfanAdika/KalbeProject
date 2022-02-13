@@ -26,9 +26,7 @@ class ProductViewModel(private val apiRepository: ApiRepository): ViewModel() {
         body.addProperty("unit", product.unit)
         body.addProperty("status", product.status)
 
-        val response = apiRepository.addProduct(body = body)
-
-        when (response) {
+        when (val response = apiRepository.addProduct(body = body)) {
             is Resource.Success -> {
                 _addProductFormResult.value = Result.Success(value = response.value)
             }
@@ -44,9 +42,8 @@ class ProductViewModel(private val apiRepository: ApiRepository): ViewModel() {
     val getProductsFormResult: LiveData<Result<List<Product>>> get() = _getProductsFormResult
 
     fun getProducts() = viewModelScope.launch {
-        val response = apiRepository.getProducts()
 
-        when (response) {
+        when (val response = apiRepository.getProducts()) {
             is Resource.Success -> {
                 val products = response.value
                 _getProductsFormResult.value = Result.Success(value = products)
@@ -54,6 +51,24 @@ class ProductViewModel(private val apiRepository: ApiRepository): ViewModel() {
 
             is Resource.Failure -> {
                 _getProductsFormResult.value = Result.Failure(message = response.errorMessage)
+            }
+        }
+    }
+
+    private var _removeProductFormResult = MutableLiveData<Result<Product>>()
+    val removeFormResult: LiveData<Result<Product>> get() = _removeProductFormResult
+
+    fun removeProduct(sku: String) = viewModelScope.launch {
+        val body = JsonObject()
+        body.addProperty("sku", sku)
+
+        when (val response = apiRepository.deleteProduct(body = body)) {
+            is Resource.Success -> {
+                _removeProductFormResult.value = Result.Success(value = response.value)
+            }
+
+            is Resource.Failure -> {
+                _removeProductFormResult.value = Result.Failure(response.errorMessage)
             }
         }
     }
