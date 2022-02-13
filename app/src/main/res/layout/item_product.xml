@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textview_sku"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sku"
+        android:textSize="@dimen/px_sp_30"
+        android:layout_marginStart="@dimen/px_dp_20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textview_product_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/product_name"
+        android:textSize="@dimen/px_sp_30"
+        app:layout_constraintStart_toEndOf="@id/textview_sku"
+        app:layout_constraintEnd_toStartOf="@id/view_button_action"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:id="@+id/view_button_action"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginEnd="@dimen/px_dp_20"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintTop_toTopOf="parent">
+
+       <androidx.appcompat.widget.AppCompatTextView
+           android:id="@+id/button_edit"
+           android:layout_width="wrap_content"
+           android:layout_height="@dimen/px_dp_50"
+           android:background="@null"
+           android:textColor="@color/colorBlue"
+           android:text="@string/edit"
+           android:textAllCaps="false"
+           android:layout_marginEnd="@dimen/px_dp_5"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintEnd_toStartOf="@id/view_separator"
+           app:layout_constraintTop_toTopOf="parent"
+           app:layout_constraintBottom_toBottomOf="parent"/>
+
+       <View
+           android:id="@+id/view_separator"
+           android:layout_width="1dp"
+           android:layout_height="0dp"
+           android:background="@color/colorLightGray"
+           app:layout_constraintStart_toEndOf="@id/button_edit"
+           app:layout_constraintEnd_toStartOf="@id/button_delete"
+           app:layout_constraintTop_toTopOf="@id/button_edit"
+           app:layout_constraintBottom_toBottomOf="@id/button_edit"/>
+
+       <androidx.appcompat.widget.AppCompatTextView
+           android:id="@+id/button_delete"
+           android:layout_width="wrap_content"
+           android:layout_height="@dimen/px_dp_50"
+           android:background="@null"
+           android:textColor="@color/colorRed"
+           android:text="@string/delete"
+           android:textAllCaps="false"
+           android:layout_marginStart="@dimen/px_dp_5"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toEndOf="@id/view_separator"
+           app:layout_constraintTop_toTopOf="parent"
+           app:layout_constraintBottom_toBottomOf="parent"/>
+
+   </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

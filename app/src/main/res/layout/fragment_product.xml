@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/px_dp_80"
+            android:layout_marginStart="@dimen/px_dp_60"
+            android:layout_marginEnd="@dimen/px_dp_50"
+            android:background="@drawable/bg_round_r8_primary_dark"
+            android:backgroundTint="@color/colorLightGray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/button_add_product"
+            app:layout_constraintTop_toTopOf="@id/button_add_product"
+            app:layout_constraintBottom_toBottomOf="@id/button_add_product">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edittext_search_sku"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="@string/search_sku"
+                android:textSize="@dimen/px_sp_25"
+                android:layout_marginStart="@dimen/px_dp_15"
+                android:layout_marginEnd="@dimen/px_dp_15"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_add_product"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/px_dp_80"
+            android:text="@string/add_product"
+            android:textColor="@color/colorWhite"
+            android:textAllCaps="false"
+            android:background="@drawable/bg_round_r8_primary_dark"
+            android:layout_marginTop="@dimen/px_dp_70"
+            android:layout_marginEnd="@dimen/px_dp_50"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/view_header_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_dp_100"
+            android:background="@drawable/bg_border_bottom"
+            android:layout_marginHorizontal="@dimen/px_dp_50"
+            android:paddingBottom="@dimen/px_dp_30"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_add_product">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_sku"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sku"
+                android:textStyle="bold"
+                android:textSize="@dimen/px_sp_40"
+                android:layout_marginStart="@dimen/px_dp_20"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/product_name"
+                android:textStyle="bold"
+                android:textSize="@dimen/px_sp_40"
+                app:layout_constraintStart_toEndOf="@id/textview_sku"
+                app:layout_constraintEnd_toStartOf="@id/textview_action"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/action"
+                android:textStyle="bold"
+                android:textSize="@dimen/px_sp_40"
+                android:layout_marginEnd="@dimen/px_dp_20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_product"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/px_dp_50"
+            app:layout_constraintTop_toBottomOf="@id/view_header_product"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
