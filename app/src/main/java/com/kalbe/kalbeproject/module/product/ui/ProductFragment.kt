@@ -5,11 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.kalbe.core.ui.BaseFragment
+import com.kalbe.datasource.model.Product
+import com.kalbe.datasource.model.Result
 import com.kalbe.kalbeproject.R
 import com.kalbe.kalbeproject.databinding.FragmentProductBinding
 import com.kalbe.kalbeproject.module.product.di.ProductModule
+import com.kalbe.kalbeproject.module.product.ui.adapter.ProductAdapter
 import com.kalbe.kalbeproject.module.product.viewmodel.ProductViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -37,6 +41,7 @@ class ProductFragment: BaseFragment() {
 
         observerViewModel()
         buttonClicked()
+        getProducts()
     }
 
     private fun buttonClicked() {
@@ -46,7 +51,37 @@ class ProductFragment: BaseFragment() {
         }
     }
 
-    private fun observerViewModel() {
+    private fun getProducts() {
+        showLoading()
+        viewModel.getProducts()
+    }
 
+    private fun observerViewModel() {
+        viewModel.getProductsFormResult.observe(viewLifecycleOwner, Observer {
+            val result = it ?: return@Observer
+            hideLoading()
+
+            when (result) {
+                is Result.Success -> {
+                    val products = result.value as ArrayList<Product>
+                    val adapter = ProductAdapter(products = products, callback = object : ProductAdapter.ProductItemCallback {
+                        override fun onEditClicked(sku: String) {
+
+                        }
+
+                        override fun onDeleteClicked(sku: String) {
+
+                        }
+
+                    })
+
+                    viewBinding?.recyclerviewProduct?.adapter = adapter
+                }
+
+                is Result.Failure -> {
+                    showSnackbar(result.message)
+                }
+            }
+        })
     }
 }

@@ -15,4 +15,8 @@ class ApiRepository(private val services: Services): BaseRepository() {
     suspend fun addProduct(body: JsonObject) = safeApiCall {
         services.postProduct(body = body)
     }
+
+    suspend fun getProducts() = safeApiCall {
+        services.getProducts()
+    }
 }
