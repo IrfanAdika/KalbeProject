@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#4CAF50</color>
+    <color name="colorPrimaryDark">#006551</color>
+    <color name="colorAccent">#E22153</color>
+    <color name="colorSoftBlack">#555555</color> //Gray 600
+    <color name="colorBgDialog">#60000000</color>
+    <color name="colorBlack">#1A1A1A</color> //Gray 700
+    <color name="colorProgress">#FF5722</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorRed">#CC3434</color>
+    <color name="colorLightGray">#EBEBEB</color>
+    <color name="colorDarkGray">#9E9E9E</color>
+    <color name="colorGray">#9E9E9E</color> //Gray 500
+    <color name="colorBlue">#4393EA</color>
+    <color name="colorLightYellow">#FFF8EF</color>
+    <color name="colorLightGreen">#E3F6EB</color>
+    <color name="colorLightBlue">#F0F7FF</color>
+    <color name="colorTransparent">#00FF0000</color>
+    <color name="colorOrange">#FF8A00</color>
+    <color name="colorLigthGreen">#E3F6EB</color>
+    <color name="colorDanger">#FCE3D6</color>
+    <color name="colorRedDarker">#76102B</color>
+</resources>
